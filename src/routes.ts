@@ -1,8 +1,17 @@
 import { Router } from "express";
 import text from "./pages/inicio";
-const routes = Router();
+import {
+  createBand,
+  profileBand,
+  updateBand,
+  deleteBand,
+} from "./modules/controllers";
 
-routes.get("/", (req, res) => res.json(text));
+const router = Router();
 
-routes.get("/banda");
-export default routes;
+router.route("/").get((req, res) => res.json(text));
+
+router.route("/band").get(profileBand).post(createBand);
+
+router.route("/band/:id_band").patch(updateBand).delete(deleteBand);
+export default router;
