@@ -1,4 +1,5 @@
 import BandModel from "./models/Band";
+import MemberModel from "./models/Member";
 
 export const createBand = async (req, res, next) => {
   try {
@@ -22,8 +23,11 @@ export const createBand = async (req, res, next) => {
 };
 export const profileBand = async (req, res, next) => {
   try {
-    const band = await BandModel.find();
+    const data = await BandModel.find();
 
+    const band = data.map((obj) =>
+      obj.populate({ path: "id_members" }).populate({ path: "id_albums" })
+    );
     return res.status(200).json(band);
   } catch (error) {
     return res.status(500).json(error);
@@ -59,4 +63,40 @@ export const deleteBand = async (req, res, next) => {
   } catch (error) {
     return res.status(500).json(error);
   }
+};
+
+// ================ members =====================
+
+export const createMember = async (req, res, next) => {
+  try {
+    const data = req.body;
+    const member = new MemberModel({
+      name: data.name,
+      country: data?.country,
+      years: data.years,
+      intruments: data?.intruments,
+      spouse: data.spouse,
+    });
+
+    await member.save();
+
+    return res.status(201).json(member);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+};
+
+export const listMembers = async (req, res, next) => {
+  try {
+    const members = await MemberModel.find();
+
+    return res.status(200).json(members);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+};
+
+export const updateMembers = async (req, res, next) => {
+  try {
+  } catch (error) {}
 };
