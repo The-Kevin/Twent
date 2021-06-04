@@ -9,7 +9,7 @@ interface Band extends Document {
 
 const BandSchema: Schema<Band> = new Schema({
   name: { type: String, required: true },
-  id_members: [{ type: Schema.Types.ObjectId, ref: "Members", required: true }],
+  id_members: [{ type: Schema.Types.ObjectId, ref: "Member", required: true }],
   past_members: [{ type: String, required: true }],
   years_active: { type: String, required: true },
   genres: [{ type: String }],
