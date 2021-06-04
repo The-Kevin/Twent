@@ -2,10 +2,18 @@ import express from "express";
 import routes from "./routes";
 import cors from "cors";
 import mongoose from "mongoose";
+import * as dotenv from "dotenv";
 const PORT = process.env.PORT || 4000;
 const app = express();
 
-mongoose.connection.once("open", () => {
+dotenv.config();
+
+mongoose.connect(process.env.DB, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+mongoose.connection.on("connected", () => {
   console.log("db connected!");
 });
 

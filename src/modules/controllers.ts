@@ -82,6 +82,7 @@ export const createMember = async (req, res, next) => {
 
     return res.status(201).json(member);
   } catch (error) {
+    console.log(error);
     return res.status(500).json(error);
   }
 };
