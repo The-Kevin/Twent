@@ -28,4 +28,4 @@ app.listen(PORT, () => {
   console.log("running");
 });
 
-module.exports.handler = serverless(app);
+//module.exports.handler = serverless(app);
