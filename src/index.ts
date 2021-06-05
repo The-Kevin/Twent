@@ -2,7 +2,10 @@ import express from "express";
 import routes from "./routes";
 import cors from "cors";
 import mongoose from "mongoose";
+import serverless from "serverless-plugin-typescript";
+
 import * as dotenv from "dotenv";
+
 const PORT = process.env.PORT || 4000;
 const app = express();
 
@@ -24,3 +27,5 @@ app.use(routes);
 app.listen(PORT, () => {
   console.log("running");
 });
+
+module.exports.handler = serverless(app);
