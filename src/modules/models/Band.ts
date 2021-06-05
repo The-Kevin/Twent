@@ -2,9 +2,12 @@ import mongoose, { Schema, Document } from "mongoose";
 
 interface Band extends Document {
   name: string;
-  members: string;
-  past_members: string;
+  members: string[];
+  past_members: string[];
   years_active: string;
+  geres: string[];
+  origin: string;
+  id_albums: string[];
 }
 
 const BandSchema: Schema<Band> = new Schema({
@@ -14,7 +17,6 @@ const BandSchema: Schema<Band> = new Schema({
   years_active: { type: String, required: true },
   genres: [{ type: String }],
   origin: { type: String, required: true },
-  songs: [{ type: String }],
   id_albums: [{ type: Schema.Types.ObjectId, ref: "Albums" }],
 });
 
