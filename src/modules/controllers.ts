@@ -99,5 +99,29 @@ export const listMembers = async (req, res, next) => {
 
 export const updateMembers = async (req, res, next) => {
   try {
-  } catch (error) {}
+    const data = req.body;
+
+    const body = {
+      name: data.name,
+      country: data.country,
+      years: data.years,
+      instruments: data.instruments,
+      spouse: data.spouse,
+    };
+    await MemberModel.updateOne({ _id: req.params.id_member }, { $set: body });
+    const member = await MemberModel.findById(req.params.id_member);
+
+    return res.status(200).json(member);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+};
+export const deleteMember = async (req, res, next) => {
+  try {
+    await MemberModel.deleteOne({ _id: req.params.id_member });
+
+    return res.status(200).json("ok");
+  } catch (error) {
+    return res.status(500).json(error);
+  }
 };
