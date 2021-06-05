@@ -4,7 +4,7 @@ interface Member extends Document {
   name: string;
   years: string;
   country: string;
-  instrumets: string;
+  instrumets: string[];
   spouse: string;
 }
 
