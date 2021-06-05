@@ -1,5 +1,6 @@
 import BandModel from "./models/Band";
 import MemberModel from "./models/Member";
+import AlbumsModel from "./models/Albums";
 
 export const createBand = async (req, res, next) => {
   try {
@@ -10,7 +11,6 @@ export const createBand = async (req, res, next) => {
       years_active: req.body.years_active,
       genres: req.body?.geres,
       origin: req.body.origin,
-      songs: req.body?.songs,
       id_albums: req.body.id_albums,
     });
 
@@ -37,14 +37,13 @@ export const updateBand = async (req, res, next) => {
   try {
     const data = req.body;
     const body = {
-      name: data.name,
-      id_members: data.members,
-      past_members: data.past_members,
-      years_active: data.years_active,
-      geres: data.geres,
-      origin: data.origin,
-      songs: data.songs,
-      id_albums: data.id_albums,
+      name: data?.name,
+      id_members: data?.members,
+      past_members: data?.past_members,
+      years_active: data?.years_active,
+      geres: data?.geres,
+      origin: data?.origin,
+      id_albums: data?.id_albums,
     };
     const band = await BandModel.updateOne(
       { _id: req.params.id_band },
@@ -102,11 +101,11 @@ export const updateMembers = async (req, res, next) => {
     const data = req.body;
 
     const body = {
-      name: data.name,
-      country: data.country,
-      years: data.years,
-      instruments: data.instruments,
-      spouse: data.spouse,
+      name: data?.name,
+      country: data?.country,
+      years: data?.years,
+      instruments: data?.instruments,
+      spouse: data?.spouse,
     };
     await MemberModel.updateOne({ _id: req.params.id_member }, { $set: body });
     const member = await MemberModel.findById(req.params.id_member);
@@ -119,6 +118,66 @@ export const updateMembers = async (req, res, next) => {
 export const deleteMember = async (req, res, next) => {
   try {
     await MemberModel.deleteOne({ _id: req.params.id_member });
+
+    return res.status(200).json("ok");
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+};
+
+//================== albums ===================
+
+export const createAlbum = async (req, res, next) => {
+  try {
+    const data = req.body;
+    const album = new AlbumsModel({
+      name: data.name,
+      data: data.data,
+      url_img: data.url_img,
+      songs: data.songs,
+    });
+
+    await album.save();
+
+    return res.status(201).json(album);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+};
+export const listAlbums = async (req, res, next) => {
+  try {
+    const albums = await AlbumsModel.find();
+
+    return res.status(200).json(albums);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+};
+export const updateAlbum = async (req, res, next) => {
+  try {
+    const data = req.body;
+
+    const body = {
+      name: data?.name,
+      data: data?.data,
+      url_img: data?.url_img,
+      songs: data?.songs,
+    };
+
+    const album = await AlbumsModel.updateOne(
+      { _id: req.params.id_album },
+      { $set: body }
+    );
+
+    return res.status(200).json(album);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+};
+
+export const deleteAlbum = async (req, res, next) => {
+  try {
+    await AlbumsModel.deleteOne({ _id: req.params.id_albums });
 
     return res.status(200).json("ok");
   } catch (error) {

@@ -9,6 +9,10 @@ import {
   listMembers,
   updateMembers,
   deleteMember,
+  createAlbum,
+  listAlbums,
+  updateAlbum,
+  deleteAlbum,
 } from "./modules/controllers";
 
 const router = Router();
@@ -24,5 +28,7 @@ router
   .route("/band/members/:id_member")
   .patch(updateMembers)
   .delete(deleteMember);
+router.route("/band/albums").get(listAlbums).post(createAlbum);
+router.route("/band/albums/:id_album").patch(updateAlbum).delete(deleteAlbum);
 
 export default router;
