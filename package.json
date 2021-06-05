@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "heroku-postbuild": "npm run build",
     "dev": "nodemon --watch 'src/' --exec 'sucrase-node src/index.ts' -e ts",
+    "build": "tsc",
+    "serve": "export NODE_ENV=production && node dist/index.js",
+    "start": "npm run serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
